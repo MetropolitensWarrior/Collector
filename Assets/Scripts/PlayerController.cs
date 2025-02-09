@@ -7,16 +7,17 @@ public class PlayerController : MonoBehaviour
     private float horizontal;
     private float vertical;
 
-    private int speed = 20;
-    private int force = 10;
-    public Rigidbody rb;
+    public int speed = 10;
+    public int speedRotate = 30;
+    public int force = 10;
+    private Rigidbody rb;
 
-    private bool onIsland;
+    public bool onIsland;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -26,11 +27,11 @@ public class PlayerController : MonoBehaviour
         vertical = Input.GetAxis("Vertical");
 
         transform.Translate(Vector3.forward * Time.deltaTime * speed * vertical);
-        transform.Rotate(Vector3.up * Time.deltaTime * speed * horizontal);
+        transform.Rotate(Vector3.up * Time.deltaTime * speedRotate * horizontal);
 
-        if (Input.GetKeyDown(KeyCode.Space)&&onIsland==true )
+        if (Input.GetKeyDown(KeyCode.Space) && onIsland)
         {
-            rb.AddForce(Vector3.up * force, ForceMode.Impulse);
+            rb.AddForce(Vector3.up * force, ForceMode.VelocityChange);
             onIsland = false;
         }
 
